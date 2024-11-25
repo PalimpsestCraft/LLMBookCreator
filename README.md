@@ -1,6 +1,6 @@
 # LLM Book Creator
-- LLM Book Creator は、指定したテーマに基づいて本を生成するためのウェブアプリケーションです。このツールは、教科書、チャット形式の対話、理解度チェックなど、多様なフォーマットでコンテンツを作成できます。A4で20ページ、50円前後で出力されます。
-- LLM Book Creator is a web application designed to generate books based on specified themes. This tool can create content in various formats, such as textbooks, chat-based dialogues, and comprehension checks. The output is approximately 20 pages in A4 size and costs around $0.50.
+- LLM Book Creator は、指定したテーマに基づいて本を生成するためのウェブアプリケーションです。このツールは、教科書、チャット形式の対話、理解度チェックなど、多様なフォーマットでコンテンツを作成できます。A4で20ページ、50円前後、30秒程度で出力されます。
+- LLM Book Creator is a web application designed to generate books based on specified themes. This tool can create content in various formats, such as textbooks, chat-style dialogues, and comprehension checks. It outputs an A4-sized, 20-page book for approximately 50 yen in about 30 seconds.
 ## 特徴/ Features
 - **多様なフォーマット**:
   - 教科書形式 (Textbook)
