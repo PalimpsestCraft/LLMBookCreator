@@ -28,7 +28,7 @@
   - Supports chat displays with dialogue from Zundamon and Zunko.
 
 ## セットアップ / Set Up
-1. Open AI API Keyを設定(app.py) / Set Open AI API Key in app.py
+1. OpenAI API Keyを設定(app.py) / Set OpenAI API Key in app.py
    ```bash
    api_key=""
    ```
