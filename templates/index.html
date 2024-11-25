@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>LLM Book Creator</title>
+    <meta name="referrer" content="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stick&family=Zen+Old+Mincho&display=swap" rel="stylesheet">
+    <style>
+        h1, h2, h3, h4, h5, h6, #user-input, button {
+            font-family: "Stick";
+        }
+
+        /* 章カウンターを初期化 */
+        body {
+            counter-reset: chapter; /* 最初の章カウンターをリセット */
+        }
+        h1::before {
+            counter-increment: chapter; /* 章カウンターをインクリメント */
+            content: counter(chapter) ". ";
+        }
+
+        body {
+            font-family: "Stick";
+            margin: 0;
+            padding: 5px;
+        }
+
+        #title {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 10px 0px 10px 0px;
+        }
+
+        h3, h4, h5, h6 {
+            margin: 5px 0px 5px 0px;
+        }
+
+        #messages {
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        .message {
+            margin: 10px 0;
+        }
+
+        .message.user {
+            text-align: right;
+            text-decoration: underline;
+            text-underline-offset: -0.2em;
+            text-decoration-thickness: 0.5em;
+            text-decoration-color: rgba(255, 228, 0, 0.4);
+            text-decoration-skip-ink: none;
+        }
+
+        .message.bot {
+            text-align: left;
+        }
+
+        .message.bot b,
+        .message h1,
+        .message h2,
+        .message h3,
+        .message h4,
+        .message h5 {
+            text-decoration: underline;
+            text-underline-offset: -0.2em;
+            text-decoration-thickness: 0.5em;
+            text-decoration-color: rgba(255, 0, 157, 0.4);
+            text-decoration-skip-ink: none;
+        }
+
+        #user-input {
+            width: 90%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        #user-input::placeholder {
+            font-family: "Stick";
+        }
+
+
+        button {
+            padding: 10px 20px;
+            background-color: #ff008c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #b30062;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 10px;
+            /* ボタン間のスペース */
+        }
+
+        .subheading {
+            font-family: "Zen Old Mincho";
+        }
+
+        .icon {
+            width: 35px;
+            height: 35px;
+        }
+
+        .line_zundamon {
+            display: flex;
+            align-items: flex-end; /* 垂直方向で下に揃える */
+            font-family: "Stick";
+        }
+
+        .line_zunko {
+            display: flex;
+            align-items: flex-end; /* 垂直方向で下に揃える */
+            font-family: "Stick";
+            flex-direction: row-reverse; /* アイコンを右、コメントを左にする */
+        }
+
+        .comment_zundamon {
+            display: inline-block;
+            padding: 10px 15px 10px 15px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        .comment_zunko {
+            display: inline-block;
+            padding: 10px 15px 10px 15px;;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 600px) {
+            #user-input {
+                width: 100%;
+            }
+            .radio-group {
+                flex-direction: column;
+            }
+            button {
+                width: 100%;
+            }
+        }
+
+        @media print{
+            .menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu">
+        <div id="title">LLM Book Creator</div>
+        <input type="text" id="user-input" placeholder="作成するテーマを入力..." />
+        <button onclick="sendMessage()" aria-label="送信ボタン">送信</button>
+        <div class="radio-group">
+            <label>
+                <input type="radio" name="format" value="textbook" checked>テキストブック
+            </label>
+            <label>
+                <input type="radio" name="format" value="chat_plain">チャット
+            </label>
+            <label>
+                <input type="radio" name="format" value="chat_comedy">チャット（冗談あり）
+            </label>
+            <label>
+                <input type="radio" name="format" value="chat_qa">理解度チェック
+            </label>
+        </div>
+    </div>
+    <div id="messages"></div>
+
+    <script>
+        function escapeHTML(str) {
+            return str.replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+        }
+
+        function sendMessage() {
+            const inputField = document.getElementById('user-input');
+            const userMessage = escapeHTML(inputField.value);
+            if (!userMessage) return;
+
+            // ユーザーのメッセージを表示
+            const messagesDiv = document.getElementById('messages');
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.classList.add('message', 'user');
+            userMessageDiv.textContent = userMessage;
+            messagesDiv.appendChild(userMessageDiv);
+
+            // 選択されたフォーマットの値を取得
+            const selectedFormat = document.querySelector('input[name="format"]:checked').value;
+
+            // フォームをリセット
+            inputField.value = '';
+
+            // サーバーにPOSTリクエストを送信
+            fetch('/api/structured_headings/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'query=' + encodeURIComponent(userMessage) + '&format=' + encodeURIComponent(selectedFormat)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    // サーバーからの応答を表示
+                    const botMessageDiv = document.createElement('div');
+                    // 各ヘディング（title）を処理
+                    data.headings.forEach(heading => {
+                        // メッセージを包むdiv作成
+                        const botMessageDiv = document.createElement('div');
+                        botMessageDiv.classList.add('message', 'bot');
+                        // タイトルの表示
+                        const headingTitle = document.createElement('div');
+                        headingTitle.classList.add('heading-title');
+                        headingTitle.innerHTML = '<h1>' + heading.title.replace('# ', '') + '</h1>';
+                        botMessageDiv.appendChild(headingTitle);
+                        // サブヘディング（subheadings）の表示
+                        heading.subheadings.forEach(subheading => {
+                            const subheadingDiv = document.createElement('div');
+                            subheadingDiv.classList.add('subheading');
+                            let formattedContent = subheading.content
+                                .replace(/\n\n/g, '\n')
+                                .replace(/##### (.*?)\n/g, '<h5>$1</h5>')
+                                .replace(/#### (.*?)\n/g, '<h4>$1</h4>')
+                                .replace(/### (.*?)\n/g, '<h3>$1</h3>')
+                                .replace('\n<h3>', '<h3>')
+                                .replace('</h3>\n', '</h3>')
+                                .replace('\n<h4>', '<h4>')
+                                .replace('</h4>\n', '</h4>')
+                                .replace('\n<h5>', '<h5>')
+                                .replace('</h5>\n', '</h5>')
+                                .replace('\n<h3>', '<h3>')
+                                .replace('</h3>\n', '</h3>')
+                                .replace('\n<h4>', '<h4>')
+                                .replace('</h4>\n', '</h4>')
+                                .replace('\n<h5>', '<h5>')
+                                .replace('</h5>\n', '</h5>')
+                                .replace(/\*\*(.*?)\*\*/g, '<b>$1</b>')  // **text** を <b>text</b> に変換
+                                .replace(/\n/g, '<br>')  // 改行を <br> に置換
+                                .replace(/ずんだもん：/g,'ずんだもん: ')
+                                .replace(/ずん子：/g, 'ずん子: ')  
+                                .replace(/ずんだもん: 「(.*?)」/g, '<div class="line_zundamon"><img src="/static/images/zundamon.png" class="icon"><span class="comment_zundamon">$1</span></div>')
+                                .replace(/ずん子: 「(.*?)」/g, '<div class="line_zunko"><img src="/static/images/zunko.png" class="icon"><span class="comment_zunko">$1</span></div>');
+                            subheadingDiv.innerHTML = '<h2>' + subheading.subheading.replace('## ', '') + '</h2>' + formattedContent;
+                            botMessageDiv.appendChild(subheadingDiv);
+                        });
+                        messagesDiv.appendChild(botMessageDiv);
+                    });
+
+                    // MathJaxを再処理して数式をレンダリング
+                    MathJax.typeset();
+
+                    // スクロールを一番下に移動
+                    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
+        };
+        // Enterキーで送信可能にする
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        )
+    </script>
+</body>
+
+</html>
