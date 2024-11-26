@@ -55,5 +55,9 @@
    - 必要に応じて内容をコピーして利用できます。
    - The generated content will be displayed on the screen.
    - You can copy and use the content as needed.
+
+## サンプル / Sample
+- 教科書形式 (Textbook)<br><img src="textbook.webp">
+- 理解度チェック形式 (QA Check)<br><img src="qa.webp">
    
 
