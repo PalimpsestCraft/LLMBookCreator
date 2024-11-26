@@ -57,7 +57,7 @@
    - You can copy and use the content as needed.
 
 ## サンプル / Sample
-- 教科書形式 (Textbook)<br><img src="textbook.webp">
-- 理解度チェック形式 (QA Check)<br><img src="qa.webp">
+- 教科書形式 (Textbook)<br><img src="textbook.png">
+- 理解度チェック形式 (QA Check)<br><img src="qa.png">
    
 
