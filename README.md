@@ -1,7 +1,7 @@
 
 
 # LLM Book Creator
-- LLM Book Creator は、ChatGPTを用いて指定したテーマに基づいて本を生成するためのウェブアプリケーションです。このツールは、教科書、チャット形式の対話、理解度チェックなど、多様なフォーマットでコンテンツを作成できます。A4で20ページ程度、50円前後、30秒程度で出力されます。
+- LLM Book Creator は、ChatGPTを用いて指定したテーマに基づいて本を生成するためのウェブアプリケーションです。このツールは、教科書、チャット形式の対話、理解度チェックなど、多様なフォーマットでコンテンツを作成できます。<ins>A4で20ページ程度、50円前後、30秒程度</ins>で出力されます。
 - LLM Book Creator is a web application that uses ChatGPT to generate books based on specified themes. This tool can create content in various formats, such as textbooks, chat-style dialogues, and comprehension checks. It produces A4-sized, 20-page books for approximately 50 yen in about 30 seconds.
 <br><img src="interface.webp">
 
