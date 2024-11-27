@@ -59,5 +59,23 @@
 ## サンプル / Sample
 - 教科書形式 (Textbook)<br><img src="textbook.png">
 - 理解度チェック形式 (QA Check)<br><img src="qa.png">
-   
 
+## 免責事項 / Disclaimer
+本プログラム（以下「本ソフトウェア」）は、現状有姿（"AS IS"）で提供されます。本ソフトウェアの使用に関する以下の事項をご了承ください。
+- 保証の否認: 本ソフトウェアは、明示的または黙示的を問わず、いかなる保証もなく提供されます。特定の目的への適合性、商品性、非侵害性に関する保証を含みますが、それに限定されません。
+- 責任の制限: 本ソフトウェアの使用、または使用不能に起因する、いかなる損害（直接的、間接的、偶発的、特殊的、結果的損害を含むがこれに限らない）についても、著作者または権利保有者は一切の責任を負いません。
+- 自己責任の原則: 本ソフトウェアの使用は、すべてユーザー自身の責任において行われるものとします。本ソフトウェアの使用によって生じた問題について、著作者または権利保有者は一切の責任を負いません。
+
+
+
+  The program (hereinafter referred to as "the Software") is provided "AS IS". Please note the following terms regarding the use of the Software:
+
+
+- Disclaimer of Warranties: 
+The Software is provided without any warranties, express or implied. This includes, but is not limited to, warranties of fitness for a particular purpose, merchantability, and non-infringement.
+
+- Limitation of Liability: 
+The authors or copyright holders shall not be held liable for any damages (including, but not limited to, direct, indirect, incidental, special, or consequential damages) arising from the use of or inability to use the Software.
+
+- Use at Your Own Risk: 
+The use of the Software is entirely at the user's own risk. The authors or copyright holders assume no responsibility for any issues that may arise from the use of the Software.
