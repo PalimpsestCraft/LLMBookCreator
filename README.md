@@ -36,11 +36,11 @@
    ```bash
    api_key=""
    ```
-3. 必要な依存ライブラリをインストールしてください / Please install the required dependency libraries.
+2. 必要な依存ライブラリをインストールしてください / Please install the required dependency libraries.
    ```bash
    pip install flask openai
    ```
-4. Flaskサーバーを起動 / Start the Flask server.
+3. Flaskサーバーを起動 / Start the Flask server.
    ```bash
    python app.py
    ```
